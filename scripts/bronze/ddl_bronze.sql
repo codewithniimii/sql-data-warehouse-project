@@ -17,7 +17,7 @@ Script Purpose:
 	 cst_key NVARCHAR(50),
 	 cst_firstname NVARCHAR(50),
 	 cst_lastname NVARCHAR(50),
-	 cst_material_status NVARCHAR(50),
+	 cst_marital_status NVARCHAR(50),
 	 cst_gndr NVARCHAR(50),
 	 cst_create_date DATE
  );
@@ -74,5 +74,5 @@ Script Purpose:
 	id NVARCHAR(50),
 	cat NVARCHAR(50),
 	subcat NVARCHAR(50),
-	maintainance NVARCHAR(50)
+	maintenance NVARCHAR(50)
 );
