@@ -1,0 +1,15 @@
+{
+	"name": "datafactory-projectbydipa",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Enabled",
+			"editable": true
+		}
+	},
+	"location": "austriaeast",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "3edf6fce-e190-424f-aa58-edbfa906031e",
+		"tenantId": "9d97530e-8f27-4137-a2a9-5cb4dcf26f2e"
+	}
+}
