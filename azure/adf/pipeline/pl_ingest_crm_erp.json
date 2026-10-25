@@ -15,8 +15,30 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_csv_dynamic",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "landing",
+							"folder": "crm",
+							"file": "cust_info.csv"
+						}
+					}
+				]
 			}
 		],
 		"annotations": []
