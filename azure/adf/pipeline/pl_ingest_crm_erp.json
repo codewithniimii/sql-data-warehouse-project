@@ -26,7 +26,26 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -34,6 +53,17 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "landing",
+							"folder": "crm",
+							"file": "cust_info.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_bronze_csv",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "bronze",
 							"folder": "crm",
 							"file": "cust_info.csv"
 						}
