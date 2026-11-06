@@ -3,72 +3,98 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "copy_landing_to_bronze",
-				"type": "Copy",
+				"name": "ForEach1",
+				"type": "ForEach",
 				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+					"items": {
+						"value": "@pipeline().parameters.fileList",
+						"type": "Expression"
 					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "ds_csv_dynamic",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "landing",
+										"folder": {
+											"value": "@item().folder",
+											"type": "Expression"
+										},
+										"file": {
+											"value": "@item.file()",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_bronze_csv",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "bronze",
+										"folder": {
+											"value": "@item().folder",
+											"type": "Expression"
+										},
+										"file": {
+											"value": "@item().file",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "ds_csv_dynamic",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "landing",
-							"folder": "crm",
-							"file": "cust_info.csv"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "ds_bronze_csv",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "bronze",
-							"folder": "crm",
-							"file": "cust_info.csv"
-						}
-					}
-				]
+					]
+				}
 			}
 		],
 		"parameters": {
@@ -82,6 +108,22 @@
 					{
 						"folder": "crm",
 						"file": "prd_info.csv"
+					},
+					{
+						"folder": "crm",
+						"file": "sales_details.csv"
+					},
+					{
+						"folder": "erp",
+						"file": "CUST_AZ12.csv"
+					},
+					{
+						"folder": "erp",
+						"file": "LOC_A101.csv"
+					},
+					{
+						"folder": "erp",
+						"file": "PX_CAT_G1V2.csv"
 					}
 				]
 			}
