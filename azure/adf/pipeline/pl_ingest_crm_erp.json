@@ -69,7 +69,7 @@
 											"type": "Expression"
 										},
 										"file": {
-											"value": "@item.file()",
+											"value": "@item().file",
 											"type": "Expression"
 										}
 									}
