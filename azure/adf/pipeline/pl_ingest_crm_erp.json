@@ -71,6 +71,21 @@
 				]
 			}
 		],
+		"parameters": {
+			"fileList": {
+				"type": "array",
+				"defaultValue": [
+					{
+						"folder": "crm",
+						"file": "cust_info.csv"
+					},
+					{
+						"folder": "crm",
+						"file": "prd_info.csv"
+					}
+				]
+			}
+		},
 		"annotations": []
 	}
 }
